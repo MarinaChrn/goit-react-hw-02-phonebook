@@ -3,6 +3,7 @@ import { ContactForm } from "./contactForm/ContactForm";
 import { ContactList } from "./contactList/ContactList";
 import { Layout } from "./GlobalStyles.styled";
 
+
 export class App extends Component  {
   state = {
     contacts: [
@@ -14,13 +15,26 @@ export class App extends Component  {
     filter:'',
   }
 
+  addContact = (contact) =>{
+    let permit = false;
+    this.state.contacts.map(element=> (
+      (element.name!==contact.name)?(permit=true):(permit=false)
+    ));
+    if (permit===true) {
+      this.setState(prevState=> ({contacts: [...prevState.contacts, contact]}))
+    } else {
+      alert(`${contact.name} is alredy in contacts`)
+    }
+  }
+
   render () {
+    console.log(this.state.contacts)
     return (
     <Layout>
       <h1>Phonebook</h1>
-      <ContactForm />
+      <ContactForm addContact={this.addContact}/>
       <h2>Contacts</h2>
-      <ContactList contacts={this.state.contacts}/>
+      <ContactList contacts={this.state.contacts} />
     </Layout>
   );
 }
