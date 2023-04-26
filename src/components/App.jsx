@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { ContactForm } from "./contactForm/ContactForm";
 import { ContactList } from "./contactList/ContactList";
+import { FilterContacts } from "./filter/FilterContacts";
 import { Layout } from "./GlobalStyles.styled";
 
 
@@ -16,25 +17,44 @@ export class App extends Component  {
   }
 
   addContact = (contact) =>{
-    let permit = false;
+    let arraysOfName=[];
     this.state.contacts.map(element=> (
-      (element.name!==contact.name)?(permit=true):(permit=false)
-    ));
-    if (permit===true) {
-      this.setState(prevState=> ({contacts: [...prevState.contacts, contact]}))
-    } else {
-      alert(`${contact.name} is alredy in contacts`)
-    }
+      arraysOfName.push(element.name) 
+      ));
+    (!arraysOfName.includes(contact.name))
+    ?(this.setState(prevState=> ({contacts: [...prevState.contacts, contact]})))
+    :(alert(`${contact.name} is alredy in contacts`)) 
   }
 
+  deleteContact=(id) =>{
+    let array = this.state.contacts;
+    const index = array.findIndex(contact => contact.id === id);
+    array.splice(index, 1);
+    this.setState(({contacts: array}))
+  }
+
+  searchByName =(name)=> {
+    this.setState(({filter: name.toLowerCase()}))
+  }
+
+  getVisibleContacts = () => {
+    if (this.state.filter.length!==0) {
+    return this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter)
+    );}
+    else {
+      return (this.state.contacts)
+    }
+  };
+
   render () {
-    console.log(this.state.contacts)
     return (
     <Layout>
       <h1>Phonebook</h1>
       <ContactForm addContact={this.addContact}/>
       <h2>Contacts</h2>
-      <ContactList contacts={this.state.contacts} />
+      <FilterContacts searchByName={this.searchByName}/>
+      <ContactList contacts={this.getVisibleContacts()} deleteContact={this.deleteContact}/> 
     </Layout>
   );
 }

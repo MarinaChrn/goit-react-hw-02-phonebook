@@ -9,9 +9,10 @@ export const ContactForm = ({addContact}) => {
             name:'',
             number:'',
         }}
-        onSubmit={contact=> {
+        onSubmit={(contact, actions)=> {
             contact.id = nanoid();
-            addContact(contact)
+            addContact(contact);
+            actions.resetForm();
         }}
        >
         <Form>
