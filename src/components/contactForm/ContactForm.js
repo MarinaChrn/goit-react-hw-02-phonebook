@@ -1,6 +1,7 @@
-import { Field, Formik } from "formik"
-import { Form, StyledLabel } from "./ContactForm.styled"
+import { Formik } from "formik"
+import { Form, StyledLabel, Field, StyledButton } from "./ContactForm.styled"
 import { nanoid } from 'nanoid'
+import PropTypes from 'prop-types';
 
 export const ContactForm = ({addContact}) => {
     return (
@@ -31,9 +32,13 @@ export const ContactForm = ({addContact}) => {
                 placeholder="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                 required/>
             </StyledLabel>
-            <button type="submit">Submit</button>
+            <StyledButton type="submit">Submit</StyledButton>
         </Form>
 
        </Formik>
     )
+}
+
+ContactForm.propTypes = {
+    addContact: PropTypes.func.isRequired,
 }

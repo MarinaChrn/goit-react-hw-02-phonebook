@@ -1,11 +1,18 @@
-import { ContactElement } from "components/contactElement/ContactElement"
+import { ContactElement } from "components/contactElement/ContactElement";
+import { StyledList } from "./ContactList.styled";
+import PropTypes from 'prop-types';
 
 export const ContactList =({contacts, deleteContact})=> {
     return (
-        <ul>
+        <StyledList>
             {contacts.map((contact, idx) => (
                 <ContactElement contact={contact} idx={idx} deleteContact={deleteContact}/>
             ))}
-        </ul>
+        </StyledList>
     )
+}
+
+ContactList.propTypes = {
+    contacts: PropTypes.array.isRequired,
+    deleteContact: PropTypes.func.isRequired,
 }
