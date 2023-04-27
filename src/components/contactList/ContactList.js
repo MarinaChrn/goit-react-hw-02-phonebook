@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 export const ContactList =({contacts, deleteContact})=> {
     return (
         <StyledList>
-            {contacts.map((contact, idx) => (
-                <ContactElement contact={contact} idx={idx} deleteContact={deleteContact}/>
+            {contacts.map((contact) => (
+                <ContactElement contact={contact} deleteContact={deleteContact} key={contact.id}/>
             ))}
         </StyledList>
     )

@@ -27,10 +27,7 @@ export class App extends Component  {
   }
 
   deleteContact=(id) =>{
-    let array = this.state.contacts;
-    const index = array.findIndex(contact => contact.id === id);
-    array.splice(index, 1);
-    this.setState(({contacts: array}))
+    this.setState(prevState=>({contacts: prevState.contacts.filter(contact=> contact.id!==id)}))
   }
 
   searchByName =(name)=> {
@@ -38,14 +35,9 @@ export class App extends Component  {
   }
 
   getVisibleContacts = () => {
-    if (this.state.filter.length!==0) {
     return this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter)
-    );}
-    else {
-      return (this.state.contacts)
-    }
-  };
+    )};
 
   render () {
     return (
